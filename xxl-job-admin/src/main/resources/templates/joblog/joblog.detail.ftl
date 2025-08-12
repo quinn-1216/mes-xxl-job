@@ -50,6 +50,27 @@
                 <li class="fa fa-refresh fa-spin" style="font-size: 20px;float: left;" id="logConsoleRunning" ></li>
             </pre>
         </section>
+        <section class="content">
+            <h4>${I18n.audit_history}</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>${I18n.audit_action}</th>
+                    <th>${I18n.audit_user}</th>
+                    <th>${I18n.audit_time}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list auditLogs as log>
+                    <tr>
+                        <td>${log.action}</td>
+                        <td>${log.username}</td>
+                        <td>${log.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </section>
     </div>
 
     <!-- footer -->

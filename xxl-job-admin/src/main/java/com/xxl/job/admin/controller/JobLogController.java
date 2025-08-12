@@ -5,11 +5,13 @@ import com.xxl.job.admin.core.exception.XxlJobException;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
+import com.xxl.job.admin.core.model.XxlJobAuditLog;
 import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.admin.dao.XxlJobGroupDao;
 import com.xxl.job.admin.dao.XxlJobInfoDao;
 import com.xxl.job.admin.dao.XxlJobLogDao;
+import com.xxl.job.admin.dao.XxlJobAuditLogDao;
 import com.xxl.job.core.biz.ExecutorBiz;
 import com.xxl.job.core.biz.model.KillParam;
 import com.xxl.job.core.biz.model.LogParam;
@@ -42,10 +44,12 @@ public class JobLogController {
 
 	@Resource
 	private XxlJobGroupDao xxlJobGroupDao;
-	@Resource
-	public XxlJobInfoDao xxlJobInfoDao;
-	@Resource
-	public XxlJobLogDao xxlJobLogDao;
+        @Resource
+        public XxlJobInfoDao xxlJobInfoDao;
+        @Resource
+        public XxlJobLogDao xxlJobLogDao;
+        @Resource
+        private XxlJobAuditLogDao xxlJobAuditLogDao;
 
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model, @RequestParam(required = false, defaultValue = "0") Integer jobId) {
@@ -127,11 +131,13 @@ public class JobLogController {
             throw new RuntimeException(I18nUtil.getString("joblog_logid_unvalid"));
 		}
 
-        model.addAttribute("triggerCode", jobLog.getTriggerCode());
+                model.addAttribute("triggerCode", jobLog.getTriggerCode());
         model.addAttribute("handleCode", jobLog.getHandleCode());
         model.addAttribute("logId", jobLog.getId());
-		return "joblog/joblog.detail";
-	}
+                List<XxlJobAuditLog> auditLogs = xxlJobAuditLogDao.findByJobId(jobLog.getJobId());
+                model.addAttribute("auditLogs", auditLogs);
+                return "joblog/joblog.detail";
+        }
 
 	@RequestMapping("/logDetailCat")
 	@ResponseBody
