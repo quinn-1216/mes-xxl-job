@@ -44,14 +44,14 @@ import java.util.*;
 public class JobInfoController {
 	private static Logger logger = LoggerFactory.getLogger(JobInfoController.class);
 
-        @Resource
-        private XxlJobGroupDao xxlJobGroupDao;
-        @Resource
-        private XxlJobService xxlJobService;
-        @Resource
-        private XxlJobInfoDao xxlJobInfoDao;
-        @Resource
-        private XxlJobAuditLogDao xxlJobAuditLogDao;
+		@Resource
+		private XxlJobGroupDao xxlJobGroupDao;
+		@Resource
+		private XxlJobService xxlJobService;
+		@Resource
+		private XxlJobInfoDao xxlJobInfoDao;
+		@Resource
+		private XxlJobAuditLogDao xxlJobAuditLogDao;
 	
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model, @RequestParam(required = false, defaultValue = "-1") int jobGroup) {
@@ -114,117 +114,117 @@ public class JobInfoController {
 		return xxlJobService.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
 	}
 	
-        @RequestMapping("/add")
-        @ResponseBody
-        public ReturnT<String> add(HttpServletRequest request, XxlJobInfo jobInfo) {
-                validPermission(request, jobInfo.getJobGroup());
-                ReturnT<String> ret = xxlJobService.add(jobInfo);
-                if (ret.getCode() == ReturnT.SUCCESS_CODE) {
-                        XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
-                        XxlJobAuditLog log = new XxlJobAuditLog();
-                        log.setJobId(jobInfo.getId());
-                        log.setUsername(user.getUsername());
-                        log.setAction("ADD");
-                        log.setCreateTime(new Date());
-                        xxlJobAuditLogDao.save(log);
-                }
-                return ret;
-        }
+		@RequestMapping("/add")
+		@ResponseBody
+		public ReturnT<String> add(HttpServletRequest request, XxlJobInfo jobInfo) {
+				validPermission(request, jobInfo.getJobGroup());
+				ReturnT<String> ret = xxlJobService.add(jobInfo);
+				if (ret.getCode() == ReturnT.SUCCESS_CODE) {
+						XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
+						XxlJobAuditLog log = new XxlJobAuditLog();
+						log.setJobId(jobInfo.getId());
+						log.setUsername(user.getUsername());
+						log.setAction("ADD");
+						log.setCreateTime(new Date());
+						xxlJobAuditLogDao.save(log);
+				}
+				return ret;
+		}
 
-        @RequestMapping("/update")
-        @ResponseBody
-        public ReturnT<String> update(HttpServletRequest request, XxlJobInfo jobInfo) {
-                validPermission(request, jobInfo.getJobGroup());
-                ReturnT<String> ret = xxlJobService.update(jobInfo);
-                if (ret.getCode() == ReturnT.SUCCESS_CODE) {
-                        XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
-                        XxlJobAuditLog log = new XxlJobAuditLog();
-                        log.setJobId(jobInfo.getId());
-                        log.setUsername(user.getUsername());
-                        log.setAction("UPDATE");
-                        log.setCreateTime(new Date());
-                        xxlJobAuditLogDao.save(log);
-                }
-                return ret;
-        }
+		@RequestMapping("/update")
+		@ResponseBody
+		public ReturnT<String> update(HttpServletRequest request, XxlJobInfo jobInfo) {
+				validPermission(request, jobInfo.getJobGroup());
+				ReturnT<String> ret = xxlJobService.update(jobInfo);
+				if (ret.getCode() == ReturnT.SUCCESS_CODE) {
+						XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
+						XxlJobAuditLog log = new XxlJobAuditLog();
+						log.setJobId(jobInfo.getId());
+						log.setUsername(user.getUsername());
+						log.setAction("UPDATE");
+						log.setCreateTime(new Date());
+						xxlJobAuditLogDao.save(log);
+				}
+				return ret;
+		}
 
-        @RequestMapping("/remove")
-        @ResponseBody
-        public ReturnT<String> remove(HttpServletRequest request, int id) {
-                XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
-                validPermission(request, jobInfo.getJobGroup());
-                ReturnT<String> ret = xxlJobService.remove(id);
-                if (ret.getCode() == ReturnT.SUCCESS_CODE) {
-                        XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
-                        XxlJobAuditLog log = new XxlJobAuditLog();
-                        log.setJobId(id);
-                        log.setUsername(user.getUsername());
-                        log.setAction("REMOVE");
-                        log.setCreateTime(new Date());
-                        xxlJobAuditLogDao.save(log);
-                }
-                return ret;
-        }
+		@RequestMapping("/remove")
+		@ResponseBody
+		public ReturnT<String> remove(HttpServletRequest request, int id) {
+				XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
+				validPermission(request, jobInfo.getJobGroup());
+				ReturnT<String> ret = xxlJobService.remove(id);
+				if (ret.getCode() == ReturnT.SUCCESS_CODE) {
+						XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
+						XxlJobAuditLog log = new XxlJobAuditLog();
+						log.setJobId(id);
+						log.setUsername(user.getUsername());
+						log.setAction("REMOVE");
+						log.setCreateTime(new Date());
+						xxlJobAuditLogDao.save(log);
+				}
+				return ret;
+		}
 
-        @RequestMapping("/stop")
-        @ResponseBody
-        public ReturnT<String> pause(HttpServletRequest request, int id) {
-                XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
-                validPermission(request, jobInfo.getJobGroup());
-                ReturnT<String> ret = xxlJobService.stop(id);
-                if (ret.getCode() == ReturnT.SUCCESS_CODE) {
-                        XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
-                        XxlJobAuditLog log = new XxlJobAuditLog();
-                        log.setJobId(id);
-                        log.setUsername(user.getUsername());
-                        log.setAction("STOP");
-                        log.setCreateTime(new Date());
-                        xxlJobAuditLogDao.save(log);
-                }
-                return ret;
-        }
+		@RequestMapping("/stop")
+		@ResponseBody
+		public ReturnT<String> pause(HttpServletRequest request, int id) {
+				XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
+				validPermission(request, jobInfo.getJobGroup());
+				ReturnT<String> ret = xxlJobService.stop(id);
+				if (ret.getCode() == ReturnT.SUCCESS_CODE) {
+						XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
+						XxlJobAuditLog log = new XxlJobAuditLog();
+						log.setJobId(id);
+						log.setUsername(user.getUsername());
+						log.setAction("STOP");
+						log.setCreateTime(new Date());
+						xxlJobAuditLogDao.save(log);
+				}
+				return ret;
+		}
 
-        @RequestMapping("/start")
-        @ResponseBody
-        public ReturnT<String> start(HttpServletRequest request, int id) {
-                XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
-                validPermission(request, jobInfo.getJobGroup());
-                ReturnT<String> ret = xxlJobService.start(id);
-                if (ret.getCode() == ReturnT.SUCCESS_CODE) {
-                        XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
-                        XxlJobAuditLog log = new XxlJobAuditLog();
-                        log.setJobId(id);
-                        log.setUsername(user.getUsername());
-                        log.setAction("START");
-                        log.setCreateTime(new Date());
-                        xxlJobAuditLogDao.save(log);
-                }
-                return ret;
-        }
+		@RequestMapping("/start")
+		@ResponseBody
+		public ReturnT<String> start(HttpServletRequest request, int id) {
+				XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
+				validPermission(request, jobInfo.getJobGroup());
+				ReturnT<String> ret = xxlJobService.start(id);
+				if (ret.getCode() == ReturnT.SUCCESS_CODE) {
+						XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
+						XxlJobAuditLog log = new XxlJobAuditLog();
+						log.setJobId(id);
+						log.setUsername(user.getUsername());
+						log.setAction("START");
+						log.setCreateTime(new Date());
+						xxlJobAuditLogDao.save(log);
+				}
+				return ret;
+		}
 
-        @RequestMapping("/trigger")
-        @ResponseBody
-        //@PermissionLimit(limit = false)
-        public ReturnT<String> triggerJob(HttpServletRequest request, int id, String executorParam, String addressList) {
-                XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
-                validPermission(request, jobInfo.getJobGroup());
-                // force cover job param
-                if (executorParam == null) {
-                        executorParam = "";
-                }
+		@RequestMapping("/trigger")
+		@ResponseBody
+		//@PermissionLimit(limit = false)
+		public ReturnT<String> triggerJob(HttpServletRequest request, int id, String executorParam, String addressList) {
+				XxlJobInfo jobInfo = xxlJobInfoDao.loadById(id);
+				validPermission(request, jobInfo.getJobGroup());
+				// force cover job param
+				if (executorParam == null) {
+						executorParam = "";
+				}
 
-                JobTriggerPoolHelper.trigger(id, TriggerTypeEnum.MANUAL, -1, null, executorParam, addressList);
+				JobTriggerPoolHelper.trigger(id, TriggerTypeEnum.MANUAL, -1, null, executorParam, addressList);
 
-                XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
-                XxlJobAuditLog log = new XxlJobAuditLog();
-                log.setJobId(id);
-                log.setUsername(user.getUsername());
-                log.setAction("TRIGGER");
-                log.setCreateTime(new Date());
-                xxlJobAuditLogDao.save(log);
+				XxlJobUser user = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
+				XxlJobAuditLog log = new XxlJobAuditLog();
+				log.setJobId(id);
+				log.setUsername(user.getUsername());
+				log.setAction("TRIGGER");
+				log.setCreateTime(new Date());
+				xxlJobAuditLogDao.save(log);
 
-                return ReturnT.SUCCESS;
-        }
+				return ReturnT.SUCCESS;
+		}
 
 	@RequestMapping("/nextTriggerTime")
 	@ResponseBody

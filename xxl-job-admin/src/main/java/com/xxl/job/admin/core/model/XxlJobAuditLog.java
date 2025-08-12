@@ -6,50 +6,50 @@ import java.util.Date;
  * Audit log for job operations
  */
 public class XxlJobAuditLog {
-    private int id;
-    private int jobId;
-    private String username;
-    private String action;
-    private Date createTime;
+	private int id;
+	private int jobId;
+	private String username;
+	private String action;
+	private Date createTime;
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getJobId() {
-        return jobId;
-    }
+	public int getJobId() {
+		return jobId;
+	}
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
-    }
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getAction() {
-        return action;
-    }
+	public String getAction() {
+		return action;
+	}
 
-    public void setAction(String action) {
-        this.action = action;
-    }
+	public void setAction(String action) {
+		this.action = action;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 }
 

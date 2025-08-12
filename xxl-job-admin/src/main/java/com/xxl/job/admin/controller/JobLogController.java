@@ -44,12 +44,12 @@ public class JobLogController {
 
 	@Resource
 	private XxlJobGroupDao xxlJobGroupDao;
-        @Resource
-        public XxlJobInfoDao xxlJobInfoDao;
-        @Resource
-        public XxlJobLogDao xxlJobLogDao;
-        @Resource
-        private XxlJobAuditLogDao xxlJobAuditLogDao;
+		@Resource
+		public XxlJobInfoDao xxlJobInfoDao;
+		@Resource
+		public XxlJobLogDao xxlJobLogDao;
+		@Resource
+		private XxlJobAuditLogDao xxlJobAuditLogDao;
 
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model, @RequestParam(required = false, defaultValue = "0") Integer jobId) {
@@ -115,9 +115,9 @@ public class JobLogController {
 		
 		// package result
 		Map<String, Object> maps = new HashMap<String, Object>();
-	    maps.put("recordsTotal", list_count);		// 总记录数
-	    maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
-	    maps.put("data", list);  					// 分页列表
+		maps.put("recordsTotal", list_count);		// 总记录数
+		maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
+		maps.put("data", list);  					// 分页列表
 		return maps;
 	}
 
@@ -128,16 +128,16 @@ public class JobLogController {
 		ReturnT<String> logStatue = ReturnT.SUCCESS;
 		XxlJobLog jobLog = xxlJobLogDao.load(id);
 		if (jobLog == null) {
-            throw new RuntimeException(I18nUtil.getString("joblog_logid_unvalid"));
+			throw new RuntimeException(I18nUtil.getString("joblog_logid_unvalid"));
 		}
 
-                model.addAttribute("triggerCode", jobLog.getTriggerCode());
-        model.addAttribute("handleCode", jobLog.getHandleCode());
-        model.addAttribute("logId", jobLog.getId());
-                List<XxlJobAuditLog> auditLogs = xxlJobAuditLogDao.findByJobId(jobLog.getJobId());
-                model.addAttribute("auditLogs", auditLogs);
-                return "joblog/joblog.detail";
-        }
+		model.addAttribute("triggerCode", jobLog.getTriggerCode());
+		model.addAttribute("handleCode", jobLog.getHandleCode());
+		model.addAttribute("logId", jobLog.getId());
+		List<XxlJobAuditLog> auditLogs = xxlJobAuditLogDao.findByJobId(jobLog.getJobId());
+		model.addAttribute("auditLogs", auditLogs);
+		return "joblog/joblog.detail";
+		}
 
 	@RequestMapping("/logDetailCat")
 	@ResponseBody
@@ -154,11 +154,11 @@ public class JobLogController {
 			ReturnT<LogResult> logResult = executorBiz.log(new LogParam(jobLog.getTriggerTime().getTime(), logId, fromLineNum));
 
 			// is end
-            if (logResult.getContent()!=null && logResult.getContent().getFromLineNum() > logResult.getContent().getToLineNum()) {
-                if (jobLog.getHandleCode() > 0) {
-                    logResult.getContent().setEnd(true);
-                }
-            }
+			if (logResult.getContent()!=null && logResult.getContent().getFromLineNum() > logResult.getContent().getToLineNum()) {
+				if (jobLog.getHandleCode() > 0) {
+					logResult.getContent().setEnd(true);
+				}
+			}
 
 			return logResult;
 		} catch (Exception e) {
